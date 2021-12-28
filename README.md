@@ -5,7 +5,7 @@ We devised a initial build of tool that will capture network stream from a live 
 Like this for example:
 
 ```
-dumpcap -i wlp1s0 -a filesize:600 -w data.pcap
+dumpcap -i wlp1s0 -a filesize:600 -w pcapF/data.pcap
 
 ```
 

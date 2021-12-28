@@ -44,6 +44,7 @@ class Preprocessing:
     def r_csv(self, filename):
         df = pd.read_csv(filename, encoding='utf-8')
         return df
+    
 
     def col_rename(self):
 
@@ -113,13 +114,13 @@ class Preprocessing:
         return df
 
     def r_hdf(self):
-        filename = '/home/bullbat/fyp-2/code/flowmeter/SplitCap/hdf5/data.h5'
+        filename = 'prediction_data/data.h5'
         df = pd.read_hdf(filename)
         return df
 
     def save_to_hdf(self):
         # converting df(csv) to df(HDF5)
-        filename = '/home/bullbat/fyp-2/code/flowmeter/SplitCap/hdf5/Normalized-data.h5'
+        filename = 'prediction_data/Normalized-data.h5'
         self.df.to_hdf(filename, 'data', mode='w', format='table')
         print("\nConverted Df to HDF5\n")
         # del df
@@ -167,10 +168,11 @@ class Preprocessing:
         # print(df.value_counts())
         var1 = df.memory_usage(index=False, deep=True)
         print(var1, 'This is the memory usage')
-        print(df.sample(8))
+        # print(df.sample(8))
 
     def convert_datatypes(self, df, a='uint8'):
-        print('Trying to convert datatypes for less memory usage')
+
+        # print('Trying to convert datatypes for less memory usage')
         max = df.max()
         print(max, 'max')
 
@@ -183,10 +185,11 @@ class Preprocessing:
         print(var1, 'memory usage')
         df = df.astype(a, errors='ignore')
         var2 = df.memory_usage(index=False, deep=True)
-        print(var2, ' new memory usage| the difference -> ', var1 / var2)
+        # print(var2, ' new memory usage| the difference -> ', var1 / var2)
         return df
 
     def normalize(self, df):
+        
         print("[* ] - Normalized data")
         normalized_df = ((df - df.min()) /
                          (df.max() - df.min())) * 225
@@ -405,7 +408,7 @@ class Preprocessing:
 
 if __name__ == "__main__":
 
-    filename = '/home/bullbat/fyp-2/code/flowmeter/SplitCap/csvs/merged_data.csv'
+    filename = 'csvs/merged_data.csv'
 
     df = pd.read_csv(filename)
     print(df.columns)
@@ -428,7 +431,13 @@ if __name__ == "__main__":
     df.to_csv("preprocessed_csv/preprocessed_data.csv", encoding='utf-8')
     print("\nSaved Preprocessed csv\n")
 
-    d.save_to_hdf()
+    # l.save_to_hdf()
+    filename1 = 'prediction_data/normed_data.h5'
+    df.to_hdf(filename1, 'data', mode='w', format='table')
+    
+    print(df.info())
+
+    # df.save_to_hdf('')
     print(df.columns)
 
     # d.r_csv(filename)
