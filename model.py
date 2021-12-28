@@ -133,11 +133,11 @@ def iocheckk(model):
 
 if __name__ == "__main__":
 
-    filename = ('/home/bullbat/fyp-2/code/flowmeter/SplitCap/MNAD-DNN.h5')
+    filename = ('MNAD-DNN.h5')
     model = load_trained_model(filename)
     print(model.weights[0])
 
-    path = '/home/bullbat/fyp-2/code/flowmeter/SplitCap/hdf5/'
+    path = 'prediction_data/'
 
     arr = os.listdir(path)
     print("\n[* ] - Number of Files to pass through model  = ", len(arr), "\n")
@@ -154,6 +154,8 @@ if __name__ == "__main__":
 
         print("\n>>>   Full path of file {}: \n".format(file_name), cat_url)
         valid_df = pd.read_hdf(cat_url)
+        # if valid_df['Unnamed: 0']:
+            # del valid_df['Unnamed: 0']
         valid_df.info()
         # valid_df = ready_tyaar(valid_df)
         print(type(valid_df), '???')

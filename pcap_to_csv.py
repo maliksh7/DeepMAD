@@ -2,7 +2,7 @@ import os
 from flowmeter import Flowmeter
 
 
-path = '/home/bullbat/fyp-2/code/flowmeter/SplitCap/pcapF/'
+path = 'pcapF/'
 
 
 arr = os.listdir(path)
