@@ -6,8 +6,8 @@ import os
 
 file = 100
 
-while(file > 2):
-# while(True):
+# while(file > 2):
+while(True):
     file_name = 1
 
     print("\n[* ] - Dumping file{} as data{}.pcap\n".format(file_name, file_name))
@@ -27,8 +27,8 @@ while(file > 2):
     
     os.system(
     'python3 pcap_to_csv.py')
-    os.system(
-        'python3 mergeCSV.py')
+    # os.system(
+        # 'python3 mergeCSV.py')
     os.system(
         'python3 norrm.py')
     # os.system('python3 csv_to_h5.py')
