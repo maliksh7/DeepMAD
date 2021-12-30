@@ -13,7 +13,7 @@ print("\n[* ] - Number of Files to convert  = ", len(arr), "\n")
 # for uniquely naming the csv files
 for file in range(0, len(arr)):
 
-    file_name = file + 1
+    file_name = 1
 
     print("\n[ * ] - Converting data_{}.pcap to data{}.csv\n".format(
         file_name, file_name))
@@ -28,3 +28,7 @@ for file in range(0, len(arr)):
 
     print(
         "\n[ * ] - Converted data_{}.pcap to data_{}.csv\n".format(file_name, file_name))
+ 
+    # use norm.py class to perform to apply preprocessing on data here and d
+    #make code modular, use date time module to figure naming of 
+    #mechanism to clear files so that they're not posessed againa nd again

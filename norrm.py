@@ -428,8 +428,8 @@ if __name__ == "__main__":
     # print(col)
 
     l.info()
-    df.to_csv("preprocessed_csv/preprocessed_data.csv", encoding='utf-8')
-    print("\nSaved Preprocessed csv\n")
+    # df.to_csv("preprocessed_csv/preprocessed_data.csv", encoding='utf-8')
+    # print("\nSaved Preprocessed csv\n")
 
     # l.save_to_hdf()
     filename1 = 'prediction_data/normed_data.h5'
