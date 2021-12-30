@@ -8,7 +8,7 @@ file = 100
 
 while(file > 2):
 # while(True):
-    file_name = file + 1
+    file_name = 1
 
     print("\n[* ] - Dumping file{} as data{}.pcap\n".format(file_name, file_name))
 
@@ -16,11 +16,15 @@ while(file > 2):
 
     p = sub.Popen(('dumpcap', '-i', 'wlp0s20f3', '-a', 'filesize:10',
                    '-w', 'pcapF/data{}.pcap'.format(file_name)), stdout=sub.PIPE)
-    
+    v = 'pcapF/data{}.pcap'.format(file_name)
+    # print(v)
     for row in iter(p.stdout.readline, b''):
         print(row.rstrip())   # process here
 
+    # print(file_name,v,'------------------')
     print("\n[ DONE ] - Saved pcap file as data{}.pcap\n".format(file_name))
+    
+    
     os.system(
     'python3 pcap_to_csv.py')
     os.system(
