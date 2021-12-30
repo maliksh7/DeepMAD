@@ -1,4 +1,4 @@
-We devised a initial build of tool that will capture network stream from a live network through Wireshark's Commad-line utility called Dumpcap.
+WORK IN PROGRESS: We devised a initial build of tool that will capture network stream from a live network through Wireshark's Commad-line utility called Dumpcap. 
 
 # Dumpcap
 
