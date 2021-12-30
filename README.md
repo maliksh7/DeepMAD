@@ -12,7 +12,7 @@ dumpcap -i wlp1s0 -a filesize:600 -w pcapF/data.pcap
 Once we have captured a pcap file, now its time to pass it to PRC Flowmeter v0.2.0.
 
 # RUN dump_traffic_to_pcap.py 
-    to see execution of tool
+    python3 dump_traffic_to_pcap.py
 
 # PRC Flowmeter v0.2.0
 
