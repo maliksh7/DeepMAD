@@ -1,7 +1,7 @@
 WORK IN PROGRESS: We devised a initial build of tool that will capture network stream from a live network through Wireshark's Commad-line utility called Dumpcap. 
 
 # Dumpcap
-
+Find Dumpcap documentation [here](https://www.wireshark.org/docs/man-pages/dumpcap.html).
 Like this for example:
 
 ```
