@@ -1,5 +1,20 @@
 import pandas as pd
 import numpy as np
+from rich.theme import Theme
+from rich.console import Console
+
+# dict of rich colors
+# color used in project
+ct = Theme({
+    'good': "bold green ",
+    'bad': "red",
+    'blue': "blue",
+    'yellow': "yellow",
+    'purple': "purple",
+    'magenta': "magenta",
+    'cyan': "cyan"
+})
+rc = Console(record=True, theme=ct)
 
 
 class Preprocessing:
@@ -40,11 +55,11 @@ class Preprocessing:
         del self.df['mean_biat']
         del self.df['min_biat']
         del self.df['label']
+        return
 
     def r_csv(self, filename):
         df = pd.read_csv(filename, encoding='utf-8')
         return df
-    
 
     def col_rename(self):
 
@@ -122,29 +137,30 @@ class Preprocessing:
         # converting df(csv) to df(HDF5)
         filename = 'prediction_data/Normalized-data.h5'
         self.df.to_hdf(filename, 'data', mode='w', format='table')
-        print("\nConverted Df to HDF5\n")
+        rc.log("\n[cyan]Converted Df to HDF5[/]\n")
         # del df
 
     def df_info(self):
         # df.head(5)
-        print("\nHead of Dataframe: \n")
-        print(self.df.head(5))
+        rc.log("\n[purple]Head of Dataframe: {}[/] \n".format(self.df.head(5)))
+        # rc.log(self.df.head(5))
 
         # df.shape
-        print("\nShape of Dataframe: \n")
-        print(self.df.shape)
+        rc.log("\n[magenta]Shape of Dataframe: {}[/]\n".format(self.df.shape))
+        # rc.log(self.df.shape)
 
         # No. of rows and columns in dataframe
-        print("\nNumber of Rows in Dataframe: {}\n".format(self.df.shape[0]))
-        print("\nNumber of Columns in Dataframe: {}\n".format(
+        rc.log(
+            "\n[cyan]Number of Rows in Dataframe: {}[/]\n".format(self.df.shape[0]))
+        rc.log("\n[good]Number of Columns in Dataframe: {}[/]\n".format(
             self.df.shape[1]))
 
         # # df.info
-        # print("\nDataframe Information: \n")
+        # rc.log("\nDataframe Information: \n")
         # self.df.info()
 
     def columns_in_df(self):
-        print("\nColumns in Dataframe: \n")
+        rc.log("\n[yellow]Columns in Dataframe:[/] \n")
         col = []
         for i in self.df.columns:
             col.append(i)
@@ -161,36 +177,40 @@ class Preprocessing:
     def check_size_dtypes(self, df):
 
         max = df.max()
-        print(max, 'max')
+        rc.log('[yellow]Maximum: {}[/]'.format(max))
+        # rc.log(max, 'max')
 
         min = df.min()
-        print(min, 'min')
-        # print(df.value_counts())
+        rc.log('[blue]Minimum: {}[/]'.format(min))
+
+        # rc.log(min, 'min')
+        # rc.log(df.value_counts())
         var1 = df.memory_usage(index=False, deep=True)
-        print(var1, 'This is the memory usage')
-        # print(df.sample(8))
+        rc.log('[magenta]This is the memory usage: {}[/]'.format(var1))
+        # rc.log(var1, 'This is the memory usage')
+        # rc.log(df.sample(8))
 
     def convert_datatypes(self, df, a='uint8'):
 
-        # print('Trying to convert datatypes for less memory usage')
+        # rc.log('Trying to convert datatypes for less memory usage')
         max = df.max()
-        print(max, 'max')
+        rc.log('[yellow]Maximum: {}[/]'.format(max))
 
         min = df.min()
-        print(min, 'min')
+        rc.log('[blue]Minimum: {}[/]'.format(min))
 
-        # print(df.value_counts())
+        # rc.log(df.value_counts())
 
         var1 = df.memory_usage(index=False, deep=True)
-        print(var1, 'memory usage')
+        rc.log('[cyan]This is the memory usage: {}[/]'.format(var1))
         df = df.astype(a, errors='ignore')
         var2 = df.memory_usage(index=False, deep=True)
-        # print(var2, ' new memory usage| the difference -> ', var1 / var2)
+        # rc.log(var2, ' new memory usage| the difference -> ', var1 / var2)
         return df
 
     def normalize(self, df):
-        
-        print("[* ] - Normalized data")
+
+        rc.log("[blue][* ] - Normalized data[/]")
         normalized_df = ((df - df.min()) /
                          (df.max() - df.min())) * 225
         return normalized_df
@@ -399,11 +419,42 @@ class Preprocessing:
         df['total_fhlen'] = d.convert_datatypes(df['total_fhlen'])
         d.check_size_dtypes(df['total_fhlen'])
 
-        # df['label'] = d.normalize(df['label'])
-        # df['label'] = d.convert_datatypes(df['label'])
-        # d.check_size_dtypes(df['label'])
+        df['min_idle_s'] = d.normalize(df['min_idle_s'])
+        df['min_idle_s'] = d.convert_datatypes(df['min_idle_s'])
+        d.check_size_dtypes(df['min_idle_s'])
 
-        df.info()
+        df['max_idle_s'] = d.normalize(df['max_idle_s'])
+        df['max_idle_s'] = d.convert_datatypes(df['max_idle_s'])
+        d.check_size_dtypes(df['max_idle_s'])
+
+        df['std_idle_s'] = d.normalize(df['std_idle_s'])
+        df['std_idle_s'] = d.convert_datatypes(df['std_idle_s'])
+        d.check_size_dtypes(df['std_idle_s'])
+
+        df['mean_idle_s'] = d.normalize(df['mean_idle_s'])
+        df['mean_idle_s'] = d.convert_datatypes(df['mean_idle_s'])
+        d.check_size_dtypes(df['mean_idle_s'])
+
+        df['flow_urg'] = d.normalize(df['flow_urg'])
+        df['flow_urg'] = d.convert_datatypes(df['flow_urg'])
+        d.check_size_dtypes(df['flow_urg'])
+
+        df['fHeaderSizeMin'] = d.normalize(df['fHeaderSizeMin'])
+        df['fHeaderSizeMin'] = d.convert_datatypes(df['fHeaderSizeMin'])
+        d.check_size_dtypes(df['fHeaderSizeMin'])
+
+        '''
+            39  URG Flag Count               87 non-null     float64 'flow_urg'
+            26  Fwd Header Length            0 non-null      float64  'fHeaderSizeMin'
+
+                Idle Mean                    87 non-null     float64  'mean_idle_s', 'std_idle_s', 'max_idle_s', 'min_idle_s'
+            52  Idle Std                     87 non-null     float64
+            53  Idle Max                     87 non-null     float64
+            54  Idle Min                     87 non-null     float64
+
+        '''
+
+        rc.log("[magenta]Data information: \n{}[/]".format(df.info()))
 
 
 if __name__ == "__main__":
@@ -411,35 +462,68 @@ if __name__ == "__main__":
     filename = 'csvs/merged_data.csv'
 
     df = pd.read_csv(filename)
-    print(df.columns)
-    # df.replace([np.inf, -np.inf], np.nan).dropna(axis=1)
+    rc.log("[cyan][*_*] - Preprocessing the captured Data - [*_*][/]\n\n")
 
-    print(df.shape)
+    rc.log("[yellow]Columns/ Features in captured data: \n{}[/]".format(df.columns))
+    rc.log("[blue]Shape of captured data: \n{}[/]".format(df.shape))
     d = Preprocessing(df)
     d.dropna()
     d.rm_col()
-
     d.apply_fn()
     l = d.col_rename()
     col = []
     for i in l:
         # col.append(i)
-        print("<-------", i, "------>")
-    # print(col)
+        rc.log("[cyan]<------- {} ------->[/]".format(i))
+    # l.info()
 
-    l.info()
-    # df.to_csv("preprocessed_csv/preprocessed_data.csv", encoding='utf-8')
-    # print("\nSaved Preprocessed csv\n")
+    rc.log("[good][ DONE ] - File is ready to fed to ML/ DL model. [magenta][ *in HDF5 Format ][/][/]")
 
-    # l.save_to_hdf()
     filename1 = 'prediction_data/normed_data.h5'
     df.to_hdf(filename1, 'data', mode='w', format='table')
-    
-    print(df.info())
+    rc.log(df.columns)
+    rc.log("[bold blue][ *** ] - Shape of captured data: {}[/]".format(df.shape))
 
-    # df.save_to_hdf('')
-    print(df.columns)
+    rc.save_html("norm-report.html")
 
-    # d.r_csv(filename)
-    # print("columns in dataframe are: \n", d.columns_in_df.values())
-    # print(d.df_info())
+    # df = pd.read_csv(filename)
+    # rc.log("[cyan][*_*] - Preprocessing the captured Data - [*_*][/]\n\n")
+
+    # rc.log("[yellow]Columns/ Features in captured data: \n{}[/]".format(df.columns))
+    # # df.replace([np.inf, -np.inf], np.nan).dropna(axis=1)
+
+    # rc.log("[blue]Shape of captured data: \n{}[/]".format(df.shape))
+    # d = Preprocessing(df)
+    # df = d.r_csv(filename)
+
+    # rc.log(df)
+
+    # rc.log("[purple]Droping NaN values.....\n[/]")
+    # d.dropna()
+
+    # # # df.replace([np.inf, -np.inf], np.nan).dropna(axis=1)
+    # # df.replace([np.inf, -np.inf], np.nan, inplace=True)
+    # # # Dropping all the rows with nan valuess
+    # # df.dropna(inplace=True)
+
+    # rc.log("[bold bad]Removing unwanted columns...\n[/]")
+    # d.rm_col()
+
+    # d.apply_fn()
+
+    # rc.log("[good]Giving Columns a meaningful name...[/]")
+    # l = d.col_rename()
+
+    # rc.log("[cyan]Data info(): \n[/] \n")
+    # l.info()
+
+    # rc.log("[magenta][*_*] - Saving preprocessed_data.csv,..[/]")
+    # df.to_csv("preprocessed_csv/preprocessed_data.csv", encoding='utf-8')
+    # rc.log("\n[good][*_*] - Saved Preprocessed csv[/]\n")
+
+    # rc.log("[good][ DONE ] - File is ready to fed to ML/ DL model. [magenta][ *in HDF5 Format ][/][/]")
+    # d.save_to_hdf()
+    # rc.log(df.columns)
+    # rc.log("[bold blue][ *** ] - Shape of captured data: {}[/]".format(df.shape))
+
+    # rc.save_html("norm-report.html")
