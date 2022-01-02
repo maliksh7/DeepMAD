@@ -42,23 +42,32 @@ def make_sponsor_message() -> Panel:
     sponsor_message.add_column(style="green", justify="right")
     sponsor_message.add_column(no_wrap=True)
     sponsor_message.add_row(
-        "Sponsor me",
-        "[u blue link=https://github.com/sponsors/willmcgugan]https://github.com/sponsors/willmcgugan",
+        "Github Repo",
+        "[u blue link=https://github.com/maliksh7/DeepMAD]https://github.com/maliksh7/DeepMAD",
     )
     sponsor_message.add_row(
-        "Buy me a :coffee:",
-        "[u blue link=https://ko-fi.com/willmcgugan]https://ko-fi.com/willmcgugan",
+        "Docs",
+        "[u blue link=https://github.com/maliksh7/DeepMAD/blob/main/README.md]https://github.com/maliksh7/DeepMAD/blob/main/README.md",
     )
-    sponsor_message.add_row(
-        "Twitter",
-        "[u blue link=https://twitter.com/willmcgugan]https://twitter.com/willmcgugan",
-    )
-    sponsor_message.add_row(
-        "Blog", "[u blue link=https://www.willmcgugan.com]https://www.willmcgugan.com"
-    )
+    # sponsor_message.add_row(
+    #     "Twitter",
+    #     "[u blue link=https://twitter.com/willmcgugan]https://twitter.com/willmcgugan",
+    # )
+    # sponsor_message.add_row(
+    #     "Blog", "[u blue link=https://www.willmcgugan.com]https://www.willmcgugan.com"
+    # )
 
     intro_message = Text.from_markup(
-        """Consider supporting my work via Github Sponsors (ask your company / organization), or buy me a coffee to say thanks. - Will McGugan"""
+        """[b magenta]Malicious Activity Detection System[/].\n
+            Deep Learning-based solution, which analyses Network Activity sequences to classify whether the certain node is Malicious or Benign. Devising a tool/software which will detect malicious Network Activity Detection using Deep Learning Model. \n
+            [b green]Tools:[/]  \n
+            - Python
+            - Neural Network (BERT)
+            - Google Colaboratory
+            - PyTorch
+            - Kaggle
+            - Tensorflow
+            - Flowmeter"""
     )
 
     message = Table.grid(padding=1)
@@ -68,7 +77,8 @@ def make_sponsor_message() -> Panel:
 
     message_panel = Panel(
         Align.center(
-            Group(intro_message, "\n", Align.center(sponsor_message)),
+            Group(Align.center(intro_message), "\n\n",
+                  Align.center(sponsor_message)),
             vertical="middle",
         ),
         box=box.ROUNDED,
@@ -116,7 +126,7 @@ job_progress = Progress(
 )
 job_progress.add_task("[green]Analyzing Network Activity", total=10)
 job_progress.add_task("[magenta]Predicting Network Activity", total=40)
-job_progress.add_task("[cyan]Preparing Network Activity", total=70)
+job_progress.add_task("[cyan]Preparing Activity Log", total=70)
 
 total = sum(task.total for task in job_progress.tasks)
 overall_progress = Progress()
