@@ -15,6 +15,7 @@ from rich.progress import Progress, SpinnerColumn, BarColumn, TextColumn
 from rich.syntax import Syntax
 from rich.table import Table
 from rich.text import Text
+from rich.syntax import Syntax
 
 console = Console()
 
@@ -56,33 +57,47 @@ def make_sponsor_message() -> Panel:
     # sponsor_message.add_row(
     #     "Blog", "[u blue link=https://www.willmcgugan.com]https://www.willmcgugan.com"
     # )
-
+    logo = Text.from_markup(
+        """
+            [yellow]Authors[/]: 
+                [green]- Muhammad Saad Hassan 
+                - Mubariz Ahmad Khan 
+                - Aamir Ahmad Khan[/]
+            [yellow]Title:[/] [b blink magenta]DeepMAD[/]
+            [yellow]Version:[/] [cyan]0.1.0[/]
+        """
+    )
     intro_message = Text.from_markup(
-        """[b magenta]Malicious Activity Detection System[/].\n
-            Deep Learning-based solution, which analyses Network Activity sequences to classify whether the certain node is Malicious or Benign. Devising a tool/software which will detect malicious Network Activity Detection using Deep Learning Model. \n
-            [b green]Tools:[/]  \n
-            - Python
-            - Neural Network (BERT)
-            - Google Colaboratory
-            - PyTorch
-            - Kaggle
-            - Tensorflow
-            - Flowmeter"""
+
+        """ 
+           [b green]Malicious Activity Detection System[/]\n
+           [purple]Deep Learning-based solution, which analyses Network Activity sequences to classify whether the certain node is Malicious or Benign. Devising a tool/software which will detect malicious Network Activity Detection using Deep Learning Model.[/] \n
+           [b green]Tools:[/]  \n
+            [cyan]* Python
+            * Deep Neural Networks
+            * Google Colaboratory
+            * PyTorch
+            * Kaggle
+            * Tensorflow
+            * Flowmeter[/]
+
+            """
     )
 
     message = Table.grid(padding=1)
     message.add_column()
     message.add_column(no_wrap=True)
-    message.add_row(intro_message, sponsor_message)
+    message.add_row(intro_message, logo, sponsor_message)
 
     message_panel = Panel(
         Align.center(
             Group(Align.center(intro_message), "\n\n",
+                  Align.center(logo), "\n",
                   Align.center(sponsor_message)),
             vertical="middle",
         ),
         box=box.ROUNDED,
-        padding=(1, 2),
+        padding=(2, 1),
         title="[b red]Wellcome to DeepMAD",
         border_style="bright_blue",
     )
@@ -97,24 +112,25 @@ class Header:
         grid.add_column(justify="center", ratio=1)
         grid.add_column(justify="right")
         grid.add_row(
-            "[b]DeepMAD[/b] Application",
-            datetime.now().ctime().replace(":", "[blink]:[/]"),
+            "[b]DeepMAD Application[/b]",
+            datetime.now().ctime().replace(":", "[blink black]:[/]"),
         )
-        return Panel(grid, style="white on blue")
+        return Panel(grid, style="white on green")
 
 
 def make_syntax() -> Syntax:
-    code = """\
-from flowmeter import Flowmeter
+    code = '''
+    """ This code converts pcap to csv """
+            from flowmeter import Flowmeter
 
-feature_gen = Flowmeter(
-    offline = "input.pcap",
-    outfunc = None,
-    outfile = "output.csv")
+            feature_gen = Flowmeter(
+                offline = "input.pcap",
+                outfunc = None,
+                outfile = "output.csv")
 
-feature_gen.run()
-    """
-    syntax = Syntax(code, "python", line_numbers=True)
+            feature_gen.run()
+            '''
+    syntax = Syntax(code, "python", theme="monokai", line_numbers=True)
     return syntax
 
 
@@ -148,7 +164,9 @@ layout = make_layout()
 layout["header"].update(Header())
 layout["body"].update(make_sponsor_message())
 layout["box2"].update(Panel(make_syntax(), border_style="green"))
-layout["box1"].update(Panel(layout.tree, border_style="red"))
+layout["box2"].update(Panel(make_syntax(), border_style="green"))
+
+layout["box1"].update(Panel(layout.tree, border_style="magenta"))
 layout["footer"].update(progress_table)
 
 
